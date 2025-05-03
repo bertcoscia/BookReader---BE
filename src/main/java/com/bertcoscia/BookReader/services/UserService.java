@@ -15,10 +15,10 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     public User save(UserRequest request) {
         if (this.userRepository.existsByEmail(request.email()))

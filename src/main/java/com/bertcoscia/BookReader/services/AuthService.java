@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    JWTTools jwtTools;
+    private JWTTools jwtTools;
 
     @Autowired
-    PasswordEncoder bcrypt;
+    private PasswordEncoder bcrypt;
 
     public String generateToken(LoginRequest request) {
         User user = this.userService.findByEmail(request.email());

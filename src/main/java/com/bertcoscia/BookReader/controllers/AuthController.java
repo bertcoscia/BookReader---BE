@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     @Autowired
-    AuthService authService;
+    private AuthService authService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)

@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class UserMapper {
 
     @Autowired
-    PasswordEncoder bcrypt;
+    private PasswordEncoder bcrypt;
 
     public User toEntity(UserRequest request) {
         User user = new User();

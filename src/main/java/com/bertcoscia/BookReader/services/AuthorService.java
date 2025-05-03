@@ -9,16 +9,18 @@ import com.bertcoscia.BookReader.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AuthorService {
 
     @Autowired
-    AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
     @Autowired
-    AuthorMapper authorMapper;
+    private AuthorMapper authorMapper;
 
     public Author save(AuthorRequest request) {
         if (this.authorRepository.existsByNameAndSurname(request.name(), request.surname()))
@@ -36,17 +38,24 @@ public class AuthorService {
         return this.authorRepository.findAll();
     }
 
+    public Set<Author> findAllById(List<Long> idList) {
+        return new HashSet<>(this.authorRepository.findAllById(idList));
+    }
+
     public List<Author> searchByNameOrSurname(String keyword) {
         return this.authorRepository.searchByNameOrSurname(keyword);
     }
 
-    public Author update(Long id, Author authorUpdated) {
+    public Author update(Long id, AuthorRequest request) {
         Author authorToUpdate = this.findById(id);
 
-        if (this.authorRepository.existsByNameAndSurname(authorUpdated.getName(), authorUpdated.getSurname()))
-            throw new BadRequestException("There is already an author called " + authorUpdated.getName() + " " + authorUpdated.getSurname());
+        if (authorRepository.existsByNameAndSurname(request.name(), request.surname())
+                && !authorToUpdate.getName().equals(request.name())
+                && !authorToUpdate.getSurname().equals(request.surname())) {
+            throw new BadRequestException("Another author with the same name and surname already exists");
+        }
 
-        return this.authorMapper.update(authorToUpdate, authorUpdated);
+        return this.authorMapper.update(authorToUpdate, request);
     }
 
     public void delete(Long id) {

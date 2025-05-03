@@ -3,6 +3,7 @@ package com.bertcoscia.BookReader.repositories;
 import com.bertcoscia.BookReader.entities.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
                 WHERE LOWER(a.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
                 OR LOWER(a.surname) LIKE LOWER(CONCAT('%', :keyword, '%'))
             """)
-    List<Author> searchByNameOrSurname(String keyword);
+    List<Author> searchByNameOrSurname(@Param("keyword") String keyword);
 }

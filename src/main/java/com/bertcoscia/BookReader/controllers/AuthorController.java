@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class AuthorController {
 
     @Autowired
-    AuthorService authorService;
+    private AuthorService authorService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -57,12 +57,12 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}")
-    public DataResponse update(@PathVariable("id") Long id, @RequestBody Author authorUpdated) {
-        return new DataResponse(true, this.authorService.update(id, authorUpdated));
+    public DataResponse update(@PathVariable("id") Long id, @RequestBody AuthorRequest request) {
+        return new DataResponse(true, this.authorService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
     public MessageResponse delete(@PathVariable("id") Long id) {
-        return new MessageResponse(true, "Auth");
+        return new MessageResponse(true, "Author deleted successfully");
     }
 }
