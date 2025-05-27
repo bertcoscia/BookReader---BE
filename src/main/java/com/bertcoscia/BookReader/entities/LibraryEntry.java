@@ -27,6 +27,7 @@ public class LibraryEntry {
     private Book book;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "library_entry_status", nullable = false)
     private LibraryEntryStatus libraryEntryStatus;
 
     @Column(name = "added_at")
